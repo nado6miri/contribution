@@ -67,7 +67,10 @@ var server = app.listen(app.get('port'), function () {
 });
 
 
-//=====================================================================
+// upgrade http server to socket.io server
+var io = require('socket.io').listen(server);
+
+//===============================================================================
 
 const Eos = require('eosjs');
 
@@ -92,10 +95,7 @@ const testnet_config = {
     chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
 };
 
-/*
-testnet_config.keyProvider = ['5KPdP9wjD7hPdNcYeWZ2JLjEnf4kuwwTrJpHQ2fDxaNrm2gCvrc']
-get_table(Eos(testnet_config), "goldenbucket", 'goldenbucket', 'activebets', 'id');
-*/
+
 /*
 eos.getTableRows({
         json: true,
@@ -110,13 +110,10 @@ eos.getTableRows({
 function get_table(eos, code, scope, table, tablekey) {
     // json, code, scope, table, table_key
     eos.getTableRows(true, code, scope, table, tablekey)
-        .then((result) => { console.log(result) })
-        .catch((error) => { colsole.error(error) });
+        .then((result) => { console.log(result); return result; })
+        .catch((error) => { colsole.error(error); return 0; });
 }
 
-
-// upgrade http server to socket.io server
-var io = require('socket.io').listen(server);
 
 // http://bcho.tistory.com/899 
 io.sockets.on('connection', function (socket) {
@@ -130,15 +127,13 @@ io.sockets.on('connection', function (socket) {
             socket.emit('insert_last', { msg: 'New Contribution... Insert row Last !!' });
             console.log('insert last row :' + data.msg);
         }
-        else { }
+        else {
+            testnet_config.keyProvider = ['5KPdP9wjD7hPdNcYeWZ2JLjEnf4kuwwTrJpHQ2fDxaNrm2gCvrc']
+            var list = get_table(Eos(testnet_config), "goldenbucket", 'goldenbucket', 'roundinfos', 'id');
+            socket.emit('insert_first', { msg: 'Get Contribution List OK...... update row !!' });
+            console.log("list return value = ");
+            console.log(list);
+        }
         console.log('Message from client :' + data.msg);
     });
-    /*
-    socket.on('clientcmd', function (data) {
-        socket.broadcast.emit('toclient', data); // 자신을 제외하고 다른 클라이언트에게 보냄
-        socket.emit('toclient', data); // 해당 클라이언트에게만 보냄. 
-        console.log('Message from client :' + data.msg);
-    });
-    */
-
 });

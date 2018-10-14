@@ -36,7 +36,8 @@
 </html>
 
 <script type="text/javascript">
-    var socket = io.connect('http://localhost:3000');
+    //var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://localhost:5555');
 
     socket.on('insert_last', function (data) {
         console.log("Insert Table");
