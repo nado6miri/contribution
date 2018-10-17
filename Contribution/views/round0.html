@@ -1,69 +1,83 @@
 ﻿<!DOCTYPE html>
-<style>
-    .fixed_header {
-        width: 1200px;
-        border-collapse: collapse;
-    }
-
-        .fixed_header tbody {
-            display: block;
-            width: 100%;
-            height: 800px;
-        }
-
-        .fixed_header thead tr {
-            display: block;
-        }
-
-        .fixed_header thead {
-            background: black;
-            color: #fff;
-        }
-
-        .fixed_header th, .fixed_header td {
-            padding: 2px;
-            text-align: left;
-            width: 200px;
-        }
-</style>
-
-
 <html>
 <head>
-    <title></title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page - My Django Application</title>
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/main.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 </head>
 
 <body>
-    <b>Donation : Small Round</b>
-    <div id="sminfo_div">
-        <span id=msgs></span>
-        <table id="donate_list" border="1" class="fixed_header">
-            <thead>
-            <th>Round No</th>
-            <th>Order</th>
-            <th>Time</th>
-            <th>Donator</th>
-            <th>Amount</th>
-            <th>SYM</th>
-            <th>Lucky Code</th>
-            <th>TxID</th>
-            </thead>
-            <tbody id="insert_sminfo_table">
-                <!--
-                <tr><td>S00001</td><td>1</td><td>2018/10/15-09:00:34</td><td>iloveyoutube</td><td>1</td><td>EOS</td><td>55</td><td>7893...2344</td></tr>
-                <tr><td>S00001</td><td>2</td><td>2018/10/15-09:00:35</td><td>ilovelgtwins</td><td>100</td><td>GOLD</td><td>35</td><td>3293...2233</td></tr>
-                -->
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <b>Send message</b>
-        <p>Message  <input type="text" id="cmdbox" />
+    <header>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <img src="/images/eos.jpg" alt="Logo" style="width:40px;">
+            <div style="width:20px"></div>
+            <a class="navbar-brand" href="/">Contribution Dapp</a>
+            <div style="width:50px"></div>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/round0">Round Zero</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users">Users</a>
+                    </li>
+                </ul>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-sm">Scatter LogIn &raquo;</a></button>
+            <p> - </p>
+            <button type="button" class="btn btn-primary btn-sm">Scatter LogIn &raquo;</a></button>
+        </nav>
+    </header>
+
+    <div class="jumbotron container body-content">
+        <H1>Donation : Small Round</H1>
+        <div id="sminfo_div">
+            <span id=msgs></span>
+            <table id="donate_list" border="1" class="fixed_header">
+                <thead>
+                <th width="120px">Round No</th>
+                <th width="60px">Order</th>
+                <th width="120px">Time</th>
+                <th width="120px">Donator</th>
+                <th width="120px">Amount</th>
+                <th width="120px">SYM</th>
+                <th width="120px">Lucky Code</th>
+                <th width="600px">TxID</th>
+                </thead>
+                <tbody id="insert_sminfo_table">
+                    <!--
+                    <tr><td>S00001</td><td>1</td><td>2018/10/15-09:00:34</td><td>iloveyoutube</td><td>1</td><td>EOS</td><td>55</td><td>7893...2344</td></tr>
+                    <tr><td>S00001</td><td>2</td><td>2018/10/15-09:00:35</td><td>ilovelgtwins</td><td>100</td><td>GOLD</td><td>35</td><td>3293...2233</td></tr>
+                    -->
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <b>Send message</b>
+            <p>Message  <input type="text" id="cmdbox" />
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; 2018 - My Django Application</p>
+        </footer>
     </div>
 </body>
 </html>
+
 
 <script type="text/javascript">
     //var socket = io.connect('http://localhost:3000');

@@ -35,12 +35,17 @@
     <Compile Include="routes\round0.js" />
     <Compile Include="routes\users.js" />
     <Content Include="package.json" />
+    <Content Include="public\images\eos.jpg" />
+    <Content Include="public\stylesheets\bootstrap.css" />
+    <Content Include="public\stylesheets\bootstrap.min.css" />
     <Content Include="public\stylesheets\main.css" />
+    <Content Include="public\stylesheets\site.css" />
     <Content Include="README.md" />
-    <Content Include="routes\round0.html" />
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
+    <Content Include="views\index.html" />
+    <Content Include="views\round0.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
