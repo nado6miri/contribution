@@ -33,13 +33,14 @@
     <Compile Include="app.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\round0.js" />
+    <Compile Include="public\javascripts\scatter.min.js" />
     <Compile Include="routes\users.js" />
     <Content Include="package.json" />
     <Content Include="public\images\eos.jpg" />
+    <Content Include="public\images\scatter.jpg" />
     <Content Include="public\stylesheets\bootstrap.css" />
     <Content Include="public\stylesheets\bootstrap.min.css" />
     <Content Include="public\stylesheets\main.css" />
-    <Content Include="public\stylesheets\site.css" />
     <Content Include="README.md" />
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />

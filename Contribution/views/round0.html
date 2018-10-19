@@ -13,6 +13,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.6/lib/eos.min.js"
+            integrity="sha512-IS9vyI+sMK7MYNJgHj9G8Li21QYs59sRW/Nyzi+dKUh6bF6OfpOnvzSCTiegWftY1ozOmmyacCH2QIJpZgbuKw=="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./javascripts/scatter.min.js"></script>
 </head>
 
 <body>
@@ -36,14 +41,20 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-primary btn-sm">Scatter LogIn &raquo;</a></button>
+            <img src="/images/scatter.jpg" alt="Scatter_Logo" width=28px height=28px>
+            <p "class=" text-primary text-white">- account.name - </p>
+            <button type="button" id ="scatterLogin" class="btn btn-primary btn-sm">Scatter LogIn &raquo;</a></button>
             <p> - </p>
-            <button type="button" class="btn btn-primary btn-sm">Scatter LogIn &raquo;</a></button>
+            <button type="button" id ="scatterLogout" class="btn btn-primary btn-sm">Scatter LogOut &raquo;</a></button>
         </nav>
     </header>
 
     <div class="jumbotron container body-content">
         <H1>Donation : Small Round</H1>
+
+        <button type="button" id="Contribution" class="btn btn-primary btn-sm">Contribution &raquo;</a></button>
+
+        <hr />
         <div id="sminfo_div">
             <span id=msgs></span>
             <table id="donate_list" border="1" class="fixed_header">
@@ -59,12 +70,13 @@
                 </thead>
                 <tbody id="insert_sminfo_table">
                     <!--
-                    <tr><td>S00001</td><td>1</td><td>2018/10/15-09:00:34</td><td>iloveyoutube</td><td>1</td><td>EOS</td><td>55</td><td>7893...2344</td></tr>
-                    <tr><td>S00001</td><td>2</td><td>2018/10/15-09:00:35</td><td>ilovelgtwins</td><td>100</td><td>GOLD</td><td>35</td><td>3293...2233</td></tr>
-                    -->
+                <tr><td>S00001</td><td>1</td><td>2018/10/15-09:00:34</td><td>iloveyoutube</td><td>1</td><td>EOS</td><td>55</td><td>7893...2344</td></tr>
+                <tr><td>S00001</td><td>2</td><td>2018/10/15-09:00:35</td><td>ilovelgtwins</td><td>100</td><td>GOLD</td><td>35</td><td>3293...2233</td></tr>
+                -->
                 </tbody>
             </table>
         </div>
+        <hr />
         <div>
             <b>Send message</b>
             <p>Message  <input type="text" id="cmdbox" />
@@ -80,89 +92,230 @@
 
 
 <script type="text/javascript">
-    //var socket = io.connect('http://localhost:3000');
-    var socket = io.connect('http://localhost:5555');
-    var SYM = ['EOS', 'GOLD'];
+    /*
+    var network = { blockchain: 'eos', protocol: 'http', host: 'api.eosnewyork.io', port: 80, chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' };
+    //var network = { blockchain: 'eos', protocol: 'http', host: 'nodes.get-scatter.com', port: 443, chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' };
 
-    socket.on('insert_last', function (data) {
-        console.log("Insert Table");
-        $('#msgs').text(data.msg + '==Insert Table');
-        //$('#donate_list > tbody:last').append('<tr><td>Last</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
-        var my_tbody = document.getElementById('insert_sminfo_table');
-        var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
-        var cell8 = row.insertCell(7);
-        cell1.innerHTML = data.id;
-        cell2.innerHTML = data.roundid;
-        cell3.innerHTML = data.jointime;
-        cell4.innerHTML = data.donator;
-        cell5.innerHTML = data.donamteamt;
-        cell6.innerHTML = SYM[data.donatetype];
-        cell7.innerHTML = data.luckycode;
-        cell8.innerHTML = "txid";
+    // You can pass in any additional options you want into the eosjs reference.
+    const eosOptions = { expireInSeconds:60 };
+    const config = {
+        expireInSeconds: 60,
+        broadcast: true,
+        debug: true,
+        sign: true,
+        httpEndpoint: 'https://api.eosnewyork.io',
+        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    };
+    */
+
+    var network = { blockchain: 'eos', protocol: 'http', host: 'jungle.cryptolions.io', port: 18888, chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca' };
+    // You can pass in any additional options you want into the eosjs reference.
+    const eosOptions = { expireInSeconds: 60 };
+    const config = {
+        expireInSeconds: 60,
+        broadcast: true,
+        debug: true,
+        sign: true,
+        httpEndpoint: 'http://jungle.cryptolions.io:18888',
+        chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    };
+
+    const keyProvider = ['PrivateKey1', 'PrivateKey2'];
+    // We're also going to require an account that is connected to the network we're using.
+    const requiredFields = { accounts: [network] };
+
+    var account = {}; 
+    var persist_account = {};
+    var socket = 0;
+    var login_status = false;
+
+    $(document).ready(function () {
+        $("#scatterLogin").click(function () { Scatter_Login(); });
+        $("#scatterLogout").click(function () { Scatter_Logout(); });
+        $("#Contribution").click(function () { Contribution(); });
     });
 
-    socket.on('insert_first', function (data) {
-        console.log("Insert Table");
-        $('#msgs').text(data.msg + '==Insert Table');
-        //$('#donate_list > tbody').append('<tr><td>First</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
-        var my_tbody = document.getElementById('insert_sminfo_table');
-        var row = my_tbody.insertRow(0); // 상단에 추가
-        //var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
-        var cell8 = row.insertCell(7);
-        cell1.innerHTML = data.id;
-        cell2.innerHTML = data.roundid;
-        cell3.innerHTML = data.jointime;
-        cell4.innerHTML = data.donator;
-        cell5.innerHTML = data.donamteamt;
-        cell6.innerHTML = SYM[data.donatetype];
-        cell7.innerHTML = data.luckycode;
-        cell8.innerHTML = "txid";
-    });
+    function socket_communication()
+    {
+        if (socket == 0)
+        {
+            socket = io.connect('http://localhost:5555');
+            var SYM = ['EOS', 'GOLD'];
 
-    socket.on('update', function (data) {
-        console.log("update / Insert Table");
-        $('#msgs').text(data.msg + '==Insert Table');
-        var my_tbody = document.getElementById('insert_sminfo_table');
-        var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
-        var cell8 = row.insertCell(7);
-        cell1.innerHTML = data.id;
-        cell2.innerHTML = data.roundid;
-        cell3.innerHTML = data.jointime;
-        cell4.innerHTML = data.donator;
-        cell5.innerHTML = data.donamteamt;
-        cell6.innerHTML = SYM[data.donatetype];
-        cell7.innerHTML = data.luckycode;
-        cell8.innerHTML = "txid";
-    });
+            socket.on('insert_last', function (data) {
+                console.log("Insert Table");
+                $('#msgs').text(data.msg + '==Insert Table');
+                //$('#donate_list > tbody:last').append('<tr><td>Last</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+                var my_tbody = document.getElementById('insert_sminfo_table');
+                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                cell1.innerHTML = data.id;
+                cell2.innerHTML = data.roundid;
+                cell3.innerHTML = data.jointime;
+                cell4.innerHTML = data.donator;
+                cell5.innerHTML = data.donamteamt;
+                cell6.innerHTML = SYM[data.donatetype];
+                cell7.innerHTML = data.luckycode;
+                cell8.innerHTML = "txid";
+            });
 
-    //===========================================================
-    $("#cmdbox").keyup(function (event) {
-        if (event.which == 13) {
-            socket.emit('clientcmd', { msg: $('#cmdbox').val() });
-            $('#cmdbox').val('');
+            socket.on('insert_first', function (data) {
+                console.log("Insert Table");
+                $('#msgs').text(data.msg + '==Insert Table');
+                //$('#donate_list > tbody').append('<tr><td>First</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+                var my_tbody = document.getElementById('insert_sminfo_table');
+                var row = my_tbody.insertRow(0); // 상단에 추가
+                //var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                cell1.innerHTML = data.id;
+                cell2.innerHTML = data.roundid;
+                cell3.innerHTML = data.jointime;
+                cell4.innerHTML = data.donator;
+                cell5.innerHTML = data.donamteamt;
+                cell6.innerHTML = SYM[data.donatetype];
+                cell7.innerHTML = data.luckycode;
+                cell8.innerHTML = "txid";
+            });
+
+            socket.on('update', function (data) {
+                console.log("update / Insert Table");
+                $('#msgs').text(data.msg + '==Insert Table');
+                var my_tbody = document.getElementById('insert_sminfo_table');
+                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                cell1.innerHTML = data.id;
+                cell2.innerHTML = data.roundid;
+                cell3.innerHTML = data.jointime;
+                cell4.innerHTML = data.donator;
+                cell5.innerHTML = data.donamteamt;
+                cell6.innerHTML = SYM[data.donatetype];
+                cell7.innerHTML = data.luckycode;
+                cell8.innerHTML = "txid";
+            });
+
+            //===========================================================
+            $("#cmdbox").keyup(function (event) {
+                if (event.which == 13) {
+                    socket.emit('clientcmd', { msg: $('#cmdbox').val() });
+                    $('#cmdbox').val('');
+                }
+            });
         }
-    });
+    }
+
+
+    function Scatter_Login() {
+        //alert("Scatter_Login");
+        if (login_status) { alert("Already Scatter LogIn Status."); }
+        else
+        {
+            scatter.connect("Contribution-donate Program")
+                .then(function (connected) {
+                    console.log('connected', connected);
+                    if (connected != true) {
+                        alert("Can't find scatter - Not connected");
+                        return;
+                    }
+                })
+                .catch(function (x) {
+                    console.log('x', x);
+                });
+
+            if (scatter.identity) {
+                console.log("Already get identity");
+                console.log("Account Info = " + persist_account.name + '@' + persist_account.authority);
+                console.log("Blockchain Accounts = " + persist_account.blockchain);
+            }
+
+            // Now we need to get an identity from the user.
+            scatter.getIdentity(requiredFields)
+                .then(() => {
+                    // Always use the accounts you got back from Scatter. Never hardcode them even if you are prompting
+                    // the user for their account name beforehand. They could still give you a different account.
+                    account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+
+                    console.log("Account Info = " + account.name + '@' + account.authority);
+                    console.log("Blockchain Accounts = " + account.blockchain);
+                    persist_account.name = account.name;
+                    persist_account.authority = account.authority;
+                    persist_account.blockchain = account.blockchain;
+                    login_status = true;
+                })
+                .catch(error => {
+                    // The user rejected this request, or doesn't have the appropriate requirements.
+                    console.error(error);
+                    alert("Already Scatter LogIn Fail. Please Check Scatter or Network Status!!")
+                });
+        }
+    }
+
+    function Scatter_Logout() {
+        //alert("Scatter_Logout");
+        scatter.forgetIdentity();
+        account.name = account.authority = account.blockchain = null;
+        console.log("Account Info = " + account.name + '@' + account.authority);
+        console.log("Blockchain Accounts = " + account.blockchain);
+        persist_account.name = account.name;
+        persist_account.authority = account.authority;
+        persist_account.blockchain = account.blockchain;
+        login_status = false;
+    }
+
+
+    function Contribution() {
+        if(login_status == false)
+        {
+            Scatter_Login();
+        }
+
+        if(login_status)
+        {
+            //Get a proxy reference to eosjs which you can use to sign transactions with a user's Scatter.
+            const eos = scatter.eos(network, Eos, config);
+
+            // ----------------------------
+            // Now that we have an identity, an EOSIO account, and a reference to an eosjs object we can send a transaction.
+            // ----------------------------
+
+            // Never assume the account's permission/authority. Always take it from the returned account.
+            //const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+            const transactionOptions = {
+                authorization: [`${account.name}@${account.authority}`],
+                broadcast: true,
+                sign: true
+            };
+
+            eos.transfer(account.name, 'goldenbucket', '1.0000 EOS', 'Contribution-99-100', transactionOptions)
+                .then(trx => {
+                    console.log(`Transaction ID: ${trx.transaction_id}`);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }
+
 </script>
 
 <!--
