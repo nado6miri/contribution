@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Scatter Extension -->
+    <!-- if you want to use chrome extention, you need to include scatter.min.js -->
+    <!--
+    <script type="text/javascript" src="./javascripts/scatter.min.js"></script>
+    -->    
+ 
+    <!-- Scatter Desktop -->
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-core.min.js"></script>
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs.min.js"></script>
+    <!--
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs2.min.js"></script>
+    -->
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-web3.min.js"></script>
+    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-tron.min.js"></script>    
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="load-html" id="NavigationMenu" data-source="/html/header.html"></div>
+        <div class="load-html" id="MainBody" data-source="/html/body_round.html"></div>
+        <div class="load-html" id="Footer" data-source="/html/footer.html"></div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".load-html").each(function () {
+            $(this).load(this.dataset.source);
+        });
+
+        $(".close").click(function () {
+            $("#alertmsg").alert("close");
+        });
+
+        $("#scatterLogin").click(function () { Scatter_Login(); });
+        $("#scatterLogout").click(function () { Scatter_Logout(); });
+
+        $("#Contribution").click(function () {
+            Contribution();
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var currentTab = $(e.target).text(); // get current tab
+            var LastTab = $(e.relatedTarget).text(); // get last tab
+            alert(currentTab, LastTab);
+        });
+    
+        $(function () {
+            var current_progress = 0;
+            var interval = setInterval(function () {
+                current_progress += 10;
+                $("#dynamic")
+                    .css("width", current_progress + "%")
+                    .attr("aria-valuenow", current_progress)
+                    .text(current_progress + "% Complete");
+                if (current_progress >= 100)
+                    clearInterval(interval);
+            }, 1000);
+        });
+
+        $("#numd").val(9);
+        $("#numc").val(8);
+        $("#numb").val(5);
+        $("#numa").val(7);
+    });
+</script>
+
+<!--
+   scrollable table....
+   https://medium.com/@vembarrajan/html-css-tricks-scroll-able-table-body-tbody-d23182ae0fbc
+-->

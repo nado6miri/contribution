@@ -10,7 +10,7 @@ var timer1_id = 0;
 router.get('/', function (req, res) {
     //res.send('round 0 page........00');
     res.writeHead(200, { 'Content-Type': 'text/html' }); // header 설정
-    fs.readFile(__dirname + '/../views/round0.html', (err, data) => { // 파일 읽는 메소드
+    fs.readFile(__dirname + '/../views/round.html', (err, data) => { // 파일 읽는 메소드
         if (err) {
             return console.error(err); // 에러 발생시 에러 기록하고 종료
         }
@@ -51,6 +51,7 @@ const testnet_config = {
     chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
 };
 
+testnet_config.keyProvider = ['']
 
 /*
 eos.getTableRows({
@@ -112,7 +113,6 @@ socket_comm.sockets.on('connection', function (socket) {
             console.log('insert last row :' + data.msg);
         }
         else {
-            testnet_config.keyProvider = ['5KPdP9wjD7hPdNcYeWZ2JLjEnf4kuwwTrJpHQ2fDxaNrm2gCvrc']
             get_table(Eos(testnet_config), "goldenbucket", 'goldenbucket', 'roundinfos', 'id');
             //socket.emit('insert_first', { msg: '[Round0] Get Contribution List OK...... update row !!' });
         }
@@ -123,7 +123,6 @@ socket_comm.sockets.on('connection', function (socket) {
 //clearInterval(timer1_id);
 
 function update() {
-    testnet_config.keyProvider = ['5KPdP9wjD7hPdNcYeWZ2JLjEnf4kuwwTrJpHQ2fDxaNrm2gCvrc']
     get_table(Eos(testnet_config), "goldenbucket", 'goldenbucket', 'roundinfos', 'id');
 
     if (needtoupdate != 0) {

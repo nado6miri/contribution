@@ -40,3 +40,30 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+
+
+/* my style definition */
+.unvisible {
+    visibility: hidden
+}
+
+.visible {
+    visibility: visible
+}
+
+.relative {
+    position: relative;
+}
+
+.fixed_alert {
+    position: fixed;
+    top: 0;
+    left: 200;
+    background-color: yellow;
+}
+
+.myprogress {
+    margin: 5px;
+    width: 100%;
+}

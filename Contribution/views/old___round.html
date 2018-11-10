@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html>
+<style>
+    .unvisible {
+        visibility: hidden
+    }
+
+    .visible {
+        visibility: visible
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    .fixed_alert {
+        position: fixed;
+        top: 0;
+        left: 200;
+        background-color: yellow;
+    }
+
+    .myprogress {
+        margin: 10px;
+        width: 70%;
+    }
+
+    #exTab3 .nav-pills > li > a {
+        border-radius: 4px 4px 0 0;
+    }
+
+    #exTab3 .tab-content {
+        color: white;
+        background-color: #428bca;
+        padding: 5px 15px;
+    }
+</style>
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page - My Django Application</title>
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/main.css" />
+
+    <!--for tab-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.6/lib/eos.min.js"
+            integrity="sha512-IS9vyI+sMK7MYNJgHj9G8Li21QYs59sRW/Nyzi+dKUh6bF6OfpOnvzSCTiegWftY1ozOmmyacCH2QIJpZgbuKw=="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./javascripts/scatter.min.js"></script>
+
+    <link rel="import" href="/html/roundrule.html">
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <img src="/images/eos.jpg" alt="Logo" style="width:40px;">
+            <div style="width:20px"></div>
+            <a class="navbar-brand" href="/">Contribution Dapp</a>
+            <div style="width:50px"></div>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/round0">Round Zero</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users">Users</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Dropdown Example
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">EOS MainNet</a></li>
+                    <li><a href="#">EOS JungleNet</a></li>
+                    <li><a href="#">EOS KylinNet</a></li>
+                </ul>
+            </div>
+            <p> - </p>
+            <img src="/images/scatter.jpg" alt="Scatter_Logo" width=28px height=28px>
+            <p> - </p>
+            <div height=28px><p id=accname class="text-center text-white"><strong>[ ************@****** ]</strong></p></div>
+            <p> - </p>
+            <button type="button" id="scatterLogin" class="btn btn-primary btn-sm">Scatter LogIn &raquo;</a></button>
+            <p> - </p>
+            <button type="button" id="scatterLogout" class="btn btn-primary btn-sm">Scatter LogOut &raquo;</a></button>
+        </nav>
+    </header>
+
+    <div class="jumbotron container body-content">
+        <div>
+            <h2>Donation : Small Round</h2>
+            <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+                <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+                <li><a data-toggle="tab" href="#RoundRule">Round Rule</a></li>
+            </ul>
+
+            <!--
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>HOME</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Menu 2</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        </div>
+        <div id="RoundRule1" class="tab-pane fade">
+            <h3>Round Rule</h3>
+            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        </div>
+    </div>
+        -->
+        </div>
+        <hr />
+        <div class="myprogress">
+            <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                <span id="current-progress"></span>
+            </div>
+        </div>
+        <hr />
+        <div id="mainmenu">
+            <p>
+                Select your Lucky Number : <input id="num1000" type="number" min="0" max="10">
+                <input id="num100" type="number" min="0" max="9">
+                <input id="num10" type="number" min="0" max="9">
+                <input id="num1" type="number" min="1" max="9">
+                <button type="button" id="Contribution" class="btn btn-primary btn-sm">Contribution &raquo;</a></button>
+            </p>
+        </div>
+        <hr />
+        <div id="sminfo_div">
+            <span id=msgs></span>
+            <table id="donate_list" border="1" class="fixed_header">
+                <thead>
+                <th width="120px">Round No</th>
+                <th width="60px">Order</th>
+                <th width="120px">Time</th>
+                <th width="120px">Donator</th>
+                <th width="120px">Amount</th>
+                <th width="120px">SYM</th>
+                <th width="120px">Lucky Code</th>
+                <th width="600px">TxID</th>
+                </thead>
+                <tbody id="insert_sminfo_table">
+                    <!--
+                    <tr><td>S00001</td><td>1</td><td>2018/10/15-09:00:34</td><td>iloveyoutube</td><td>1</td><td>EOS</td><td>55</td><td>7893...2344</td></tr>
+                    <tr><td>S00001</td><td>2</td><td>2018/10/15-09:00:35</td><td>ilovelgtwins</td><td>100</td><td>GOLD</td><td>35</td><td>3293...2233</td></tr>
+                    -->
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div>
+            <b>Send message</b>
+            <p>Message  <input type="text" id="cmdbox" />
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; Since 2018 - Contribution Application base on EOS Blockchain.</p>
+            <p>
+                면책성명: 만 18세 미만의 청소년은 복권을 진행하실 수 없습니다. 인터넷 복권추첨은 금전상적 리스크를 수반하는복 오락게임입니다.
+                반드시 이 리스크에 대해 숙지하신 후 스스로 잘 절제하시길 바랍니다.
+                본문은 그 어떤 사람에게도 해당하시는 지역, 주 혹은 국가의 법률을 고의로 위반하도록 유도하지 않았습니다.
+                사용자의 유일한 책임은 소속된 관할내의 법률 법규를 참고하시고 해당하는 합법성을 확보해야 합니다.
+            </p>
+            <p><input type="text" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)' style='ime-mode:disabled;'></p>
+        </footer>
+    </div>
+    <div class="container">
+        <!--http://ko.learnlayout.com/position.html-->
+        <div class="alert alert-success alert-dismissible fixed_alert" id="alertmsg">
+            <button type="button" class="close">&times;</button>
+            <strong>Success!</strong> This alert box could indicate a successful or positive action.
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+    /*
+    var network = { blockchain: 'eos', protocol: 'http', host: 'api.eosnewyork.io', port: 80, chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' };
+    //var network = { blockchain: 'eos', protocol: 'http', host: 'nodes.get-scatter.com', port: 443, chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906' };
+
+    // You can pass in any additional options you want into the eosjs reference.
+    const eosOptions = { expireInSeconds:60 };
+    const config = {
+        expireInSeconds: 60,
+        broadcast: true,
+        debug: true,
+        sign: true,
+        httpEndpoint: 'https://api.eosnewyork.io',
+        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    };
+    */
+
+    var network = { blockchain: 'eos', protocol: 'http', host: 'jungle.cryptolions.io', port: 18888, chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca' };
+    // You can pass in any additional options you want into the eosjs reference.
+    const eosOptions = { expireInSeconds: 60 };
+    const config = {
+        expireInSeconds: 60,
+        broadcast: true,
+        debug: true,
+        sign: true,
+        httpEndpoint: 'http://jungle.cryptolions.io:18888',
+        chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    };
+
+    const keyProvider = ['PrivateKey1', 'PrivateKey2'];
+    // We're also going to require an account that is connected to the network we're using.
+    const requiredFields = { accounts: [network] };
+
+    var account = {}; 
+    var persist_account = {};
+    var socket = 0;
+    var login_status = false;
+
+    $(document).ready(function () {
+        //$('#alertmsg').hide();
+        $(".close").click(function () {
+            $("#alertmsg").alert("close");
+        });
+        $("#scatterLogin").click(function () { Scatter_Login(); });
+        $("#scatterLogout").click(function () { Scatter_Logout(); });
+        $("#Contribution").click(function () { Contribution(); });
+        $(function () {
+            var current_progress = 0;
+            var interval = setInterval(function () {
+                current_progress += 10;
+                $("#dynamic")
+                    .css("width", current_progress + "%")
+                    .attr("aria-valuenow", current_progress)
+                    .text(current_progress + "% Complete");
+                if (current_progress >= 100)
+                    clearInterval(interval);
+            }, 1000);
+        });
+    });
+
+
+    function Scatter_Login() {
+        //alert("Scatter_Login");
+        if (login_status)
+        {
+            alert("Already Scatter LogIn Status.");
+            $(".close").click(function () {
+                $("#myAlert").alert("close");
+            });
+        }
+        else
+        {
+            scatter.connect("Contribution-donate Program")
+                .then(function (connected) {
+                    console.log('connected', connected);
+                    if (connected != true) {
+                        alert("Can't find scatter - Not connected");
+                        return;
+                    }
+                })
+                .catch(function (x) {
+                    console.log('x', x);
+                });
+
+            if (scatter.identity) {
+                console.log("Already get identity");
+                console.log("Account Info = " + persist_account.name + '@' + persist_account.authority);
+                console.log("Blockchain Accounts = " + persist_account.blockchain);
+            }
+
+            // Now we need to get an identity from the user.
+            scatter.getIdentity(requiredFields)
+                .then(() => {
+                    // Always use the accounts you got back from Scatter. Never hardcode them even if you are prompting
+                    // the user for their account name beforehand. They could still give you a different account.
+                    account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+
+                    console.log("Account Info = " + account.name + '@' + account.authority);
+                    console.log("Blockchain Accounts = " + account.blockchain);
+                    persist_account.name = account.name;
+                    persist_account.authority = account.authority;
+                    persist_account.blockchain = account.blockchain;
+                    let strtmp = "<strong> [" + account.name + '@' + account.authority + "]</strong>";
+                    $('#accname').html(strtmp);
+                    $('#scatterLogin').removeClass('btn-primary').addClass('btn-success');
+                    login_status = true;
+                })
+                .catch(error => {
+                    // The user rejected this request, or doesn't have the appropriate requirements.
+                    console.error(error.message);
+                    alert(error.message);
+                });
+        }
+    }
+
+    function Scatter_Logout() {
+        //alert("Scatter_Logout");
+        if (login_status) {
+            scatter.forgetIdentity()
+                .then((result) => {
+                    account.name = account.authority = account.blockchain = null;
+                    console.log("Account Info = " + account.name + '@' + account.authority);
+                    console.log("Blockchain Accounts = " + account.blockchain);
+                    persist_account.name = account.name;
+                    persist_account.authority = account.authority;
+                    persist_account.blockchain = account.blockchain;
+                    login_status = false;
+                    alert("Logout Success!!");
+                    let strtmp = "<strong>" + "[ ************@****** ]" + "</strong>";
+                    $('#accname').html(strtmp);
+                    $('#scatterLogin').removeClass('btn-success').addClass('btn-primary');
+                })
+                .catch(error => {
+                    console.error(error.message);
+                    alert(error.message);
+                });
+        }
+        else
+        {
+            alert("Already Logout Status");
+        }
+    }
+
+
+    function Contribution() {
+        if(login_status == false)
+        {
+            Scatter_Login();
+        }
+        else
+        {
+            //Get a proxy reference to eosjs which you can use to sign transactions with a user's Scatter.
+            const eos = scatter.eos(network, Eos, config);
+
+            // ----------------------------
+            // Now that we have an identity, an EOSIO account, and a reference to an eosjs object we can send a transaction.
+            // ----------------------------
+
+            // Never assume the account's permission/authority. Always take it from the returned account.
+            //const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+            const transactionOptions = {
+                authorization: [`${account.name}@${account.authority}`],
+                broadcast: true,
+                sign: true
+            };
+
+            eos.transfer(account.name, 'goldenbucket', '1.0000 EOS', 'Contribution-99-100', transactionOptions)
+                .then(trx => {
+                    console.log(`Transaction ID: ${trx.transaction_id}`);
+                })
+                .catch(error => {
+                    let errorjson = JSON.parse(error);
+                    console.error("error =", error);
+                    alert("error code =" + errorjson['code'] + "\n" + "Message=" + errorjson['error']['details'][0]['message']);
+                });
+        }
+    }
+
+    function onlyNumber(event) {
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
+            return;
+        else
+            return false;
+    }
+    function removeChar(event) {
+        event = event || window.event;
+        var keyID = (event.which) ? event.which : event.keyCode;
+        if (keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39)
+            return;
+        else
+            event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    }
+
+
+    function socket_communication() {
+        if (socket == 0) {
+            socket = io.connect('http://localhost:5555');
+            var SYM = ['EOS', 'GOLD'];
+
+            socket.on('insert_last', function (data) {
+                console.log("Insert Table");
+                $('#msgs').text(data.msg + '==Insert Table');
+                //$('#donate_list > tbody:last').append('<tr><td>Last</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+                var my_tbody = document.getElementById('insert_sminfo_table');
+                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                cell1.innerHTML = data.id;
+                cell2.innerHTML = data.roundid;
+                cell3.innerHTML = data.jointime;
+                cell4.innerHTML = data.donator;
+                cell5.innerHTML = data.donamteamt;
+                cell6.innerHTML = SYM[data.donatetype];
+                cell7.innerHTML = data.luckycode;
+                cell8.innerHTML = "txid";
+            });
+
+            socket.on('insert_first', function (data) {
+                console.log("Insert Table");
+                $('#msgs').text(data.msg + '==Insert Table');
+                //$('#donate_list > tbody').append('<tr><td>First</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
+                var my_tbody = document.getElementById('insert_sminfo_table');
+                var row = my_tbody.insertRow(0); // 상단에 추가
+                //var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                cell1.innerHTML = data.id;
+                cell2.innerHTML = data.roundid;
+                cell3.innerHTML = data.jointime;
+                cell4.innerHTML = data.donator;
+                cell5.innerHTML = data.donamteamt;
+                cell6.innerHTML = SYM[data.donatetype];
+                cell7.innerHTML = data.luckycode;
+                cell8.innerHTML = "txid";
+            });
+
+            socket.on('update', function (data) {
+                console.log("update / Insert Table");
+                $('#msgs').text(data.msg + '==Insert Table');
+                var my_tbody = document.getElementById('insert_sminfo_table');
+                var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+                cell1.innerHTML = data.id;
+                cell2.innerHTML = data.roundid;
+                cell3.innerHTML = data.jointime;
+                cell4.innerHTML = data.donator;
+                cell5.innerHTML = data.donamteamt;
+                cell6.innerHTML = SYM[data.donatetype];
+                cell7.innerHTML = data.luckycode;
+                cell8.innerHTML = "txid";
+            });
+
+            //===========================================================
+            $("#cmdbox").keyup(function (event) {
+                if (event.which == 13) {
+                    socket.emit('clientcmd', { msg: $('#cmdbox').val() });
+                    $('#cmdbox').val('');
+                }
+            });
+        }
+    }
+</script>
+
+<!--
+   scrollable table....
+   https://medium.com/@vembarrajan/html-css-tricks-scroll-able-table-body-tbody-d23182ae0fbc
+-->

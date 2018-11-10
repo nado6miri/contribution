@@ -31,11 +31,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="public\javascripts\contribution.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="routes\round0.js" />
     <Compile Include="public\javascripts\scatter.min.js" />
     <Compile Include="routes\users.js" />
     <Content Include="package.json" />
+    <Content Include="public\html\footer.html" />
+    <Content Include="public\html\header.html" />
+    <Content Include="public\html\body_round.html" />
+    <Content Include="public\html\roundrule.html" />
     <Content Include="public\images\eos.jpg" />
     <Content Include="public\images\scatter.jpg" />
     <Content Include="public\stylesheets\bootstrap.css" />
@@ -46,12 +51,14 @@
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
     <Content Include="views\index.html" />
-    <Content Include="views\round0.html" />
+    <Content Include="views\round.html" />
+    <Content Include="views\old___round.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
+    <Folder Include="public\html\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
